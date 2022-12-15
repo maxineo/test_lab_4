@@ -3,9 +3,11 @@ import { ChessmanType } from "../enums/ChessmanType";
 import { IChessman } from "../interfaces/Chessman";
 import { isAllowedPosition } from "../utils/isAllowedPosition";
 import { StrictOmit } from "../utils/StrictOmit";
-import { ChessField } from "./ChessField";
 
-type PawnCreationData = StrictOmit<Pawn, 'getPosition' | 'type' | 'isMoved'>;
+type PawnCreationData = StrictOmit<Pawn, 'getPosition' | 'type' | 'isMoved' | 'isCanMove'>;
+
+const WHITE_PAWN_INIT_ROW = 1;
+const BLACK_PAWN_INIT_ROW = 6;
 
 export class Pawn implements IChessman {
 
@@ -19,7 +21,12 @@ export class Pawn implements IChessman {
 
   public readonly color: ChessmanColor;
 
-  public getPosition: () => ChessField;
+  public getPosition() {
+    return {
+      row: this.row,
+      column: this.column,
+    }
+  };
 
   public isCanMove(row: number, column: number, isEnemy: boolean): boolean {
     if (!isAllowedPosition(row, column)) {
@@ -33,7 +40,7 @@ export class Pawn implements IChessman {
     if (column !== this.column) {
       return false;
     }
-    if (this.isMoved) {
+    if (this.color === ChessmanColor.White ? this.row !== WHITE_PAWN_INIT_ROW : this.row !== BLACK_PAWN_INIT_ROW) {
       return this.color === ChessmanColor.White ?
         row - this.row === 1 :
         row - this.row === -1;

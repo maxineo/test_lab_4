@@ -12,7 +12,10 @@ export interface IChessman {
 
   readonly color: ChessmanColor;
 
-  readonly getPosition: () => ChessField;
+  readonly getPosition: () => {
+    row: number;
+    column: number;
+  };
 
   readonly isCanMove: (row: number, column: number, isEnemy: boolean) => boolean;
 };
