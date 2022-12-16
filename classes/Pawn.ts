@@ -34,8 +34,8 @@ export class Pawn implements IChessman {
     }
     if (isEnemy) {
       return this.color === ChessmanColor.White ?
-        row - this.row === 1 && column - this.column === 1 || this.column === -1 :
-        row - this.row === -1 && column - this.column === 1 || this.column === -1;
+        row - this.row === 1 && (column - this.column === 1 || column - this.column === -1) :
+        row - this.row === -1 && (column - this.column === 1 || column - this.column === -1);
     }
     if (column !== this.column) {
       return false;
@@ -52,6 +52,7 @@ export class Pawn implements IChessman {
 
   public constructor(data: PawnCreationData) {
     this.getPosition = this.getPosition.bind(this);
+    this.isCanMove = this.isCanMove.bind(this);
     this.type = ChessmanType.Pawn;
     this.isMoved = false;
     this.color = data.color;
