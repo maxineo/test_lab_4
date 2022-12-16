@@ -25,34 +25,34 @@ export class Pawn implements IChessman {
     return {
       row: this.row,
       column: this.column,
-    }
+    };
   };
 
   public isCanMove(row: number, column: number, isEnemy: boolean): boolean {
     if (!isAllowedPosition(row, column)) {
       return false;
-    }
+    };
     if (isEnemy) {
       return this.color === ChessmanColor.White ?
         row - this.row === 1 && (column - this.column === 1 || column - this.column === -1) :
         row - this.row === -1 && (column - this.column === 1 || column - this.column === -1);
-    }
+    };
     if (column !== this.column) {
       return false;
-    }
+    };
     if (this.color === ChessmanColor.White ? this.row !== WHITE_PAWN_INIT_ROW : this.row !== BLACK_PAWN_INIT_ROW) {
       return this.color === ChessmanColor.White ?
         row - this.row === 1 :
         row - this.row === -1;
-    }
+    };
     return this.color === ChessmanColor.White ?
       row - this.row === 1 || row - this.row === 2 :
       row - this.row === -1 || row - this.row === -2;
-  }
+  };
 
   public isCanPromote(): boolean {
     return this.color === ChessmanColor.White ? this.row === 7 : this.row === 0;
-  }
+  };
 
   public constructor(data: PawnCreationData) {
     this.getPosition = this.getPosition.bind(this);
@@ -63,6 +63,6 @@ export class Pawn implements IChessman {
     this.color = data.color;
     this.row = data.row;
     this.column = data.column;
-  }
+  };
 
 }
