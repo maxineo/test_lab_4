@@ -17,7 +17,7 @@ export interface IChessman {
     column: number;
   };
 
-  readonly moveTo: (row: number, column: number) => void;
+  readonly moveTo: (row: number, column: number,  isEnemy: boolean) => void;
 
   readonly isCanMove: (row: number, column: number, isEnemy: boolean) => boolean;
 };

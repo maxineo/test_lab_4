@@ -32,9 +32,11 @@ export class Bishop implements IChessman {
     return Math.abs(row - this.row) === Math.abs(column - this.column);
   };
 
-  public moveTo(row: number, column: number) {
-    this.row = row;
-    this.column = column;
+  public moveTo(row: number, column: number, isEnemy: boolean) {
+    if (this.isCanMove(row, column, isEnemy)) {
+      this.row = row;
+      this.column = column;
+    }
   };
 
   public constructor(data: BishopCreationData) {

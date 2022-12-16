@@ -55,9 +55,11 @@ export class Pawn implements IChessman {
     return this.color === ChessmanColor.White ? this.row === 7 : this.row === 0;
   };
 
-  public moveTo(row: number, column: number): void {
-    this.row = row;
-    this.column = column;
+  public moveTo(row: number, column: number, isEnemy: boolean): void {
+    if (this.isCanMove(row, column, isEnemy)) {
+      this.row = row;
+      this.column = column;
+    }
   };
 
   public constructor(data: PawnCreationData) {
