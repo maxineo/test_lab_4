@@ -9,11 +9,42 @@ test('Test pawn getPosition', () => {
     color: ChessmanColor.White,
   });
 
-  expect(pawn.getPosition()).toEqual({ // Correct row and column
+  expect(pawn.getPosition()).toEqual({
+    // Correct position
     row: 1,
     column: 1,
   })
 })
+
+test('Test pawn moveTo', () => {
+  const pawn = new Pawn({
+    row: 1,
+    column: 1,
+    color: ChessmanColor.White,
+  });
+
+  expect(pawn.getPosition()).toEqual({
+    // Correct position
+    row: 1,
+    column: 1,
+  });
+
+  pawn.moveTo(3, 1, false);
+
+  expect(pawn.getPosition()).toEqual({
+    // Changed position
+    row: 3,
+    column: 1,
+  })
+
+  pawn.moveTo(6, 1, false); // Make incorrect move.
+
+  expect(pawn.getPosition()).toEqual({
+    // Not changed position
+    row: 3,
+    column: 1,
+  })
+});
 
 test('Test white pawn moves which did`nt move', () => {
 

@@ -10,10 +10,40 @@ test('Test bishop getPosition', () => {
   });
 
   expect(bishop.getPosition()).toEqual({
-    // Correct row and column
+    // Correct position
     row: 1,
     column: 1,
   });
+});
+
+test('Test bishop moveTo', () => {
+  const bishop = new Bishop({
+    row: 4,
+    column: 4,
+    color: ChessmanColor.White,
+  });
+
+  expect(bishop.getPosition()).toEqual({
+    // Correct position
+    row: 4,
+    column: 4,
+  });
+
+  bishop.moveTo(6, 6, false);
+
+  expect(bishop.getPosition()).toEqual({
+    // Changed position
+    row: 6,
+    column: 6,
+  })
+
+  bishop.moveTo(6, 1, false); // Make incorrect move.
+
+  expect(bishop.getPosition()).toEqual({
+    // Not changed position
+    row: 6,
+    column: 6,
+  })
 });
 
 test('Test bishop moves', () => {
