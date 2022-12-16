@@ -1,4 +1,7 @@
+import { Bishop } from "../classes/Bishop";
 import { ChessBoard } from "../classes/ChessBoard"
+import { Pawn } from "../classes/Pawn";
+import { ChessmanColor } from "../enums/ChessmanColor";
 
 test('Test getFieldByPosition', () => {
 
@@ -18,4 +21,38 @@ test('Test getFieldByPosition', () => {
   expect(board.getFieldByPosition(10, 10)).toBe(null);
   expect(board.getFieldByPosition(50, 50)).toBe(null);
   expect(board.getFieldByPosition(-10, -10)).toBe(null);
+});
+
+test('Test setChessmanAtPosition', () => {
+
+  const board = new ChessBoard();
+
+  const pawnRow = 1;
+  const pawnColumn = 1;
+
+  const pawn = new Pawn({
+    row: pawnRow,
+    column: pawnColumn,
+    color: ChessmanColor.White,
+  });
+
+  board.setChessmanAtPosition(pawnRow, pawnColumn, pawn);
+  const boardPawn = board.getFieldByPosition(pawnRow, pawnColumn)?.chessman;
+  expect(boardPawn).not.toBe(null);
+  expect(boardPawn).not.toBe(undefined);
+
+  // Test incorrect position
+  const bishopRow = 10;
+  const bishopColumn = 10;
+
+  const bishop = new Bishop({
+    row: bishopRow,
+    column: bishopColumn,
+    color: ChessmanColor.White,
+  });
+
+  board.setChessmanAtPosition(bishopRow, bishopColumn, bishop);
+  const boardBishop = board.getFieldByPosition(bishopRow, bishopColumn)?.chessman;
+  expect(boardBishop).toBe(undefined);
+
 })

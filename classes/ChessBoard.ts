@@ -24,8 +24,8 @@ export class ChessBoard {
           row,
           column,
           chessman: null,
-        }))
-      }
+        }));
+      };
     };
     this.setChessmanAtPosition = this.setChessmanAtPosition.bind(this);
     this.getFieldByPosition = this.getFieldByPosition.bind(this);
