@@ -17,11 +17,12 @@ export class ChessBoard {
   }
 
   public constructor() {
-    for (let i = 0; i < 8; i++) {
-      for (let j = 0; j < 8; j++) {
+    this.fields = [];
+    for (let row = 0; row < 8; row++) {
+      for (let column = 0; column < 8; column++) {
         this.fields.push(new ChessField({
-          row: i,
-          column: j,
+          row,
+          column,
           chessman: null,
         }))
       }
