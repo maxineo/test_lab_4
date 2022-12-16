@@ -4,7 +4,7 @@ import { IChessman } from "../interfaces/Chessman";
 import { isAllowedPosition } from "../utils/isAllowedPosition";
 import { StrictOmit } from "../utils/StrictOmit";
 
-type PawnCreationData = StrictOmit<Pawn, 'getPosition' | 'type' | 'isMoved' | 'isCanMove'>;
+type PawnCreationData = StrictOmit<Pawn, 'getPosition' | 'type' | 'isMoved' | 'isCanMove' | 'isCanPromote'>;
 
 const WHITE_PAWN_INIT_ROW = 1;
 const BLACK_PAWN_INIT_ROW = 6;
@@ -50,9 +50,14 @@ export class Pawn implements IChessman {
       row - this.row === -1 || row - this.row === -2;
   }
 
+  public isCanPromote(): boolean {
+    return this.color === ChessmanColor.White ? this.row === 7 : this.row === 0;
+  }
+
   public constructor(data: PawnCreationData) {
     this.getPosition = this.getPosition.bind(this);
     this.isCanMove = this.isCanMove.bind(this);
+    this.isCanPromote = this.isCanPromote.bind(this);
     this.type = ChessmanType.Pawn;
     this.isMoved = false;
     this.color = data.color;

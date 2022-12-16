@@ -108,7 +108,7 @@ test('Test white pawn attack moves', () => {
   expect(pawn.isCanMove(5, 5, true)).toBe(false); // attack diagonally by many fields
   expect(pawn.isCanMove(2, 1, true)).toBe(false); // attack right
   expect(pawn.isCanMove(2, 3, true)).toBe(false); // attack left
-})
+});
 
 test('Test black pawn attack moves', () => {
 
@@ -127,4 +127,40 @@ test('Test black pawn attack moves', () => {
   expect(pawn.isCanMove(1, 1, true)).toBe(false); // attack diagonally by many fields
   expect(pawn.isCanMove(4, 5, true)).toBe(false); // attack right
   expect(pawn.isCanMove(4, 3, true)).toBe(false); // attack left
+});
+
+test('Test white pawn promotion', () => {
+
+  const promotablePawn = new Pawn({
+    row: 7,
+    column: 2,
+    color: ChessmanColor.White,
+  });
+
+  const nonPromotablePawn = new Pawn({
+    row: 5,
+    column: 2,
+    color: ChessmanColor.White,
+  });
+
+  expect(promotablePawn.isCanPromote()).toBe(true);
+  expect(nonPromotablePawn.isCanPromote()).toBe(false);
 })
+
+test('Test black pawn promotion', () => {
+
+  const promotablePawn = new Pawn({
+    row: 0,
+    column: 2,
+    color: ChessmanColor.Black,
+  });
+
+  const nonPromotablePawn = new Pawn({
+    row: 4,
+    column: 2,
+    color: ChessmanColor.Black,
+  });
+
+  expect(promotablePawn.isCanPromote()).toBe(true);
+  expect(nonPromotablePawn.isCanPromote()).toBe(false);
+});
