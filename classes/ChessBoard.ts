@@ -16,6 +16,10 @@ export class ChessBoard {
     return isAllowedPosition(row, column) ? this.fields[row * 8 + column] : null;
   }
 
+  public isDiagonalMove(fromRow: number, fromColumn: number, toRow: number, toColumn: number): boolean {
+    return Math.abs(toRow - fromRow) === Math.abs(toColumn - fromColumn);
+  }
+
   public constructor() {
     this.fields = [];
     for (let row = 0; row < 8; row++) {
@@ -29,5 +33,6 @@ export class ChessBoard {
     };
     this.setChessmanAtPosition = this.setChessmanAtPosition.bind(this);
     this.getFieldByPosition = this.getFieldByPosition.bind(this);
+    this.isDiagonalMove = this.isDiagonalMove.bind(this);
   }
 }

@@ -54,5 +54,19 @@ test('Test setChessmanAtPosition', () => {
   board.setChessmanAtPosition(bishopRow, bishopColumn, bishop);
   const boardBishop = board.getFieldByPosition(bishopRow, bishopColumn)?.chessman;
   expect(boardBishop).toBe(undefined);
+});
 
-})
+test('test diagonal move check', () => {
+
+  const board = new ChessBoard();
+
+  expect(board.isDiagonalMove(4, 4, 6, 6)).toBe(true); // Diagonal move
+  expect(board.isDiagonalMove(4, 4, 6, 2)).toBe(true); // Diagonal move
+  expect(board.isDiagonalMove(4, 4, 2, 6)).toBe(true); // Diagonal move
+  expect(board.isDiagonalMove(4, 4, 2, 2)).toBe(true); // Diagonal move
+
+  expect(board.isDiagonalMove(4, 4, 6, 4)).toBe(false); // Non diagonal move
+  expect(board.isDiagonalMove(4, 4, 4, 2)).toBe(false); // Non diagonal move
+  expect(board.isDiagonalMove(4, 4, 2, 4)).toBe(false); // Non diagonal move
+  expect(board.isDiagonalMove(4, 4, 4, 6)).toBe(false); // Non diagonal move
+});
