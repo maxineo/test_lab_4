@@ -77,7 +77,7 @@ test('Test bishop moves', () => {
   expect(bishop.isCanMove(4, 7, false)).toBe(false); // Move right by 3
 });
 
-test('Test bishop moves', () => {
+test('Test bishop attacks', () => {
 
   const bishop = new Bishop({
     row: 4,
