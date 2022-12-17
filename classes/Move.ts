@@ -1,4 +1,6 @@
-type MoveCreationData = Move;
+import { StrictOmit } from "../utils/StrictOmit";
+
+type MoveCreationData = StrictOmit<Move, 'asString'>;
 
 export class Move {
 
