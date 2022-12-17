@@ -3,7 +3,7 @@ import { ChessBoard } from "../classes/ChessBoard"
 import { Pawn } from "../classes/Pawn";
 import { ChessmanColor } from "../enums/ChessmanColor";
 
-test('Test getFieldByPosition', () => {
+test('Test board getFieldByPosition', () => {
 
   const board = new ChessBoard();
 
@@ -23,7 +23,7 @@ test('Test getFieldByPosition', () => {
   expect(board.getFieldByPosition(-10, -10)).toBe(null);
 });
 
-test('Test setChessmanAtPosition', () => {
+test('Test board setChessmanAtPosition', () => {
 
   const board = new ChessBoard();
 
@@ -56,7 +56,7 @@ test('Test setChessmanAtPosition', () => {
   expect(boardBishop).toBe(undefined);
 });
 
-test('test diagonal move check', () => {
+test('Test board diagonal move check', () => {
 
   const board = new ChessBoard();
 
@@ -71,7 +71,7 @@ test('test diagonal move check', () => {
   expect(board.isDiagonalMove(4, 4, 4, 6)).toBe(false); // Non diagonal move
 });
 
-test('test straight move check', () => {
+test('Test board straight move check', () => {
 
   const board = new ChessBoard();
 
