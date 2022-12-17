@@ -41,7 +41,6 @@ export class ChessBoard {
       const isMovingUp = toRow > fromRow;
       const isMovingDown = toRow < fromRow;
       const isMovingRight = toColumn > fromColumn;
-      const isMovingLeft = toColumn < fromColumn;
       if (isMovingUp) {
         for (let row = fromRow; row < toRow; row++) {
           if (this.getFieldByPosition(row, fromColumn)?.chessman != null) {
