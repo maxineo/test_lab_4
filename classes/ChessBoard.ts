@@ -20,6 +20,11 @@ export class ChessBoard {
     return Math.abs(toRow - fromRow) === Math.abs(toColumn - fromColumn);
   }
 
+  public isStraightMove(fromRow: number, fromColumn: number, toRow: number, toColumn: number): boolean {
+    return toRow !== fromRow && toColumn === fromColumn ||
+      toColumn !== fromColumn && toRow === fromRow;
+  }
+
   public constructor() {
     this.fields = [];
     for (let row = 0; row < 8; row++) {
@@ -34,5 +39,6 @@ export class ChessBoard {
     this.setChessmanAtPosition = this.setChessmanAtPosition.bind(this);
     this.getFieldByPosition = this.getFieldByPosition.bind(this);
     this.isDiagonalMove = this.isDiagonalMove.bind(this);
+    this.isStraightMove = this.isStraightMove.bind(this);
   }
 }

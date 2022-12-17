@@ -70,3 +70,18 @@ test('test diagonal move check', () => {
   expect(board.isDiagonalMove(4, 4, 2, 4)).toBe(false); // Non diagonal move
   expect(board.isDiagonalMove(4, 4, 4, 6)).toBe(false); // Non diagonal move
 });
+
+test('test straight move check', () => {
+
+  const board = new ChessBoard();
+
+  expect(board.isStraightMove(4, 4, 6, 4)).toBe(true); // Non diagonal move
+  expect(board.isStraightMove(4, 4, 4, 2)).toBe(true); // Non diagonal move
+  expect(board.isStraightMove(4, 4, 2, 4)).toBe(true); // Non diagonal move
+  expect(board.isStraightMove(4, 4, 4, 6)).toBe(true); // Non diagonal move
+
+  expect(board.isStraightMove(4, 4, 6, 6)).toBe(false); // Diagonal move
+  expect(board.isStraightMove(4, 4, 6, 2)).toBe(false); // Diagonal move
+  expect(board.isStraightMove(4, 4, 2, 6)).toBe(false); // Diagonal move
+  expect(board.isStraightMove(4, 4, 2, 2)).toBe(false); // Diagonal move
+});
