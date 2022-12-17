@@ -25,6 +25,52 @@ export class ChessBoard {
       toColumn !== fromColumn && toRow === fromRow;
   }
 
+  public isObstacleOnMovementPath(fromRow: number, fromColumn: number, toRow: number, toColumn: number): boolean {
+    if (this.isDiagonalMove(fromRow, fromColumn, toRow, toColumn)) {
+      const isMovingUp = toRow > fromRow;
+      const isMovingRight = toColumn > fromColumn;
+      for (let row = fromRow + 1; isMovingUp ? row < toRow : row > toRow; row = isMovingUp ? ++row : --row) {
+        for (let column = fromColumn + 1; isMovingRight ? column < toColumn : column > toColumn; isMovingRight ? column++ : column--) {
+          if (this.getFieldByPosition(row, column)?.chessman != null) {
+            return true;
+          };
+        };
+      };
+    };
+    if (this.isStraightMove(fromRow, fromColumn, toRow, toColumn)) {
+      const isMovingUp = toRow > fromRow;
+      const isMovingDown = toRow < fromRow;
+      const isMovingRight = toColumn > fromColumn;
+      const isMovingLeft = toColumn < fromColumn;
+      if (isMovingUp) {
+        for (let row = fromRow; row < toRow; row++) {
+          if (this.getFieldByPosition(row, fromColumn)?.chessman != null) {
+            return true;
+          };
+        };
+      } else if (isMovingDown) {
+        for (let row = fromRow; row > toRow; row--) {
+          if (this.getFieldByPosition(row, fromColumn)?.chessman != null) {
+            return true;
+          };
+        };
+      } else if (isMovingRight) {
+        for (let column = fromColumn; column < toColumn; column++) {
+          if (this.getFieldByPosition(fromRow, column)?.chessman != null) {
+            return true;
+          };
+        };
+      } else {
+        for (let column = fromColumn; column > toColumn; column--) {
+          if (this.getFieldByPosition(fromRow, column)?.chessman != null) {
+            return true;
+          };
+        };
+      };
+    };
+    return false;
+  }
+
   public constructor() {
     this.fields = [];
     for (let row = 0; row < 8; row++) {

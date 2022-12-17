@@ -85,3 +85,30 @@ test('Test board straight move check', () => {
   expect(board.isStraightMove(4, 4, 2, 6)).toBe(false); // Diagonal move
   expect(board.isStraightMove(4, 4, 2, 2)).toBe(false); // Diagonal move
 });
+
+test('Test board obstacle on movement path check', () => {
+  const board = new ChessBoard();
+
+  const obstacleRow = 4;
+  const obstacleColumn = 4;
+
+  const obstaclePawn = new Pawn({
+    row: obstacleRow,
+    column: obstacleColumn,
+    color: ChessmanColor.White,
+  });
+
+  board.setChessmanAtPosition(obstacleRow, obstacleColumn, obstaclePawn);
+
+  expect(board.isObstacleOnMovementPath(2, 2, 6, 6)).toBe(true); // Diagonal movement with obstacle.
+  expect(board.isObstacleOnMovementPath(2, 6, 6, 2)).toBe(true); // Diagonal movement with obstacle.
+  expect(board.isObstacleOnMovementPath(6, 2, 2, 6)).toBe(true); // Diagonal movement with obstacle.
+  expect(board.isObstacleOnMovementPath(6, 6, 2, 2)).toBe(true); // Diagonal movement with obstacle.
+  expect(board.isObstacleOnMovementPath(2, 2, 3, 3)).toBe(false); // Diagonal movement without obstacle.
+
+  expect(board.isObstacleOnMovementPath(4, 2, 4, 6)).toBe(true); // Straight movement with obstacle.
+  expect(board.isObstacleOnMovementPath(2, 4, 6, 4)).toBe(true); // Straight movement with obstacle.
+  expect(board.isObstacleOnMovementPath(4, 6, 4, 2)).toBe(true); // Straight movement with obstacle.
+  expect(board.isObstacleOnMovementPath(6, 4, 2, 4)).toBe(true); // Straight movement with obstacle.
+  expect(board.isObstacleOnMovementPath(4, 2, 3, 6)).toBe(false); // Straight movement without obstacle.
+});
