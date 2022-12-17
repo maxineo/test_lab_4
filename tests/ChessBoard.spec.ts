@@ -112,3 +112,66 @@ test('Test board obstacle on movement path check', () => {
   expect(board.isObstacleOnMovementPath(6, 4, 2, 4)).toBe(true); // Straight movement with obstacle.
   expect(board.isObstacleOnMovementPath(4, 2, 3, 6)).toBe(false); // Straight movement without obstacle.
 });
+
+test('Test board movements with one chessman at the board', () => {
+
+  const board = new ChessBoard();
+
+  const pawnInitRow = 1;
+  const pawnInitColumn = 1;
+
+  const pawn = new Pawn({
+    row: pawnInitRow,
+    column: pawnInitColumn,
+    color: ChessmanColor.White,
+  });
+
+  board.setChessmanAtPosition(pawnInitRow, pawnInitColumn, pawn);
+
+  const pawnFirstMoveRow = 3;
+  const pawnFirstMoveColumn = 1;
+
+  expect(board.moveChessmanFromTo(pawn.row, pawn.column, pawnFirstMoveRow, pawnFirstMoveColumn).isSuccess).toBe(true);
+  expect(board.getFieldByPosition(pawnFirstMoveRow, pawnFirstMoveColumn)?.chessman).toBe(pawn);
+
+  const pawnIncorrectSecondMoveRow = 5;
+  const pawnIncorrectSecondMoveColumn = 1;
+
+  expect(board.moveChessmanFromTo(pawn.row, pawn.column, pawnIncorrectSecondMoveRow, pawnIncorrectSecondMoveColumn).isSuccess).toBe(false);
+  expect(board.getFieldByPosition(pawnIncorrectSecondMoveRow, pawnIncorrectSecondMoveColumn)?.chessman).toBe(null);
+
+  expect(board.moveChessmanFromTo(2, 2, 3, 3).isSuccess).toBe(false); // Position without chessman
+  expect(board.getFieldByPosition(3, 3)?.chessman).toBe(null);
+
+  const obstaclePawnRow = 4;
+  const obstaclePawnColumn = 1;
+
+  const obstaclePawn = new Pawn({
+    row: obstaclePawnRow,
+    column: obstaclePawnColumn,
+    color: ChessmanColor.White,
+  })
+
+  board.setChessmanAtPosition(obstaclePawnRow, obstaclePawnColumn, obstaclePawn);
+
+  expect(board.moveChessmanFromTo(pawnFirstMoveRow, pawnFirstMoveColumn, obstaclePawnRow, obstaclePawnColumn).isSuccess).toBe(false); // Moving pawn to a position with another friendly pawn.
+  expect(board.getFieldByPosition(3, 3)?.chessman).toBe(null);
+
+  const bishopInitRow = 1;
+  const bishopInitColumn = 3;
+
+  const bishop = new Bishop({ // Unfriendly bishop
+    row: bishopInitRow,
+    column: bishopInitColumn,
+    color: ChessmanColor.Black,
+  });
+  
+  board.setChessmanAtPosition(bishopInitRow, bishopInitColumn, bishop);
+  
+  expect(board.moveChessmanFromTo(bishop.row, bishop.column, 4, 0).isSuccess).toBe(false); // Trying to jump over pawn
+  expect(board.moveChessmanFromTo(bishop.row, bishop.column, 4, 0).isAttack).toBe(false);
+  expect(board.getFieldByPosition(pawnFirstMoveRow, pawnFirstMoveColumn)?.chessman).toBe(pawn);
+
+  expect(board.moveChessmanFromTo(bishop.row, bishop.column, 8, 10).isSuccess).toBe(false); // Trying move away from board
+
+});

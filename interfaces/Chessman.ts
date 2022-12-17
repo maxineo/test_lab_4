@@ -1,12 +1,11 @@
 import { ChessmanType } from "../enums/ChessmanType";
 import { ChessmanColor } from "../enums/ChessmanColor";
-import { Move } from "./Move";
 
 export interface IChessman {
 
-  readonly row: number;
+  row: number;
 
-  readonly column: number;
+  column: number;
 
   readonly type: ChessmanType;
 

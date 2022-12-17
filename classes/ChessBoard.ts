@@ -1,6 +1,7 @@
 import { IChessman } from "../interfaces/Chessman";
 import { isAllowedPosition } from "../utils/isAllowedPosition";
 import { ChessField } from "./ChessField";
+import { Move } from './Move';
 
 export class ChessBoard {
 
@@ -29,8 +30,8 @@ export class ChessBoard {
     if (this.isDiagonalMove(fromRow, fromColumn, toRow, toColumn)) {
       const isMovingUp = toRow > fromRow;
       const isMovingRight = toColumn > fromColumn;
-      for (let row = fromRow + 1; isMovingUp ? row < toRow : row > toRow; row = isMovingUp ? ++row : --row) {
-        for (let column = fromColumn + 1; isMovingRight ? column < toColumn : column > toColumn; isMovingRight ? column++ : column--) {
+      for (let row = isMovingUp ? fromRow + 1 : fromRow - 1; isMovingUp ? row < toRow : row > toRow; row = isMovingUp ? ++row : --row) {
+        for (let column = isMovingRight ? fromColumn + 1 : fromColumn - 1; isMovingRight ? column < toColumn : column > toColumn; isMovingRight ? column++ : column--) {
           if (this.getFieldByPosition(row, column)?.chessman != null) {
             return true;
           };
@@ -42,25 +43,25 @@ export class ChessBoard {
       const isMovingDown = toRow < fromRow;
       const isMovingRight = toColumn > fromColumn;
       if (isMovingUp) {
-        for (let row = fromRow; row < toRow; row++) {
+        for (let row = fromRow + 1; row < toRow; row++) {
           if (this.getFieldByPosition(row, fromColumn)?.chessman != null) {
             return true;
           };
         };
       } else if (isMovingDown) {
-        for (let row = fromRow; row > toRow; row--) {
+        for (let row = fromRow - 1; row > toRow; row--) {
           if (this.getFieldByPosition(row, fromColumn)?.chessman != null) {
             return true;
           };
         };
       } else if (isMovingRight) {
-        for (let column = fromColumn; column < toColumn; column++) {
+        for (let column = fromColumn + 1; column < toColumn; column++) {
           if (this.getFieldByPosition(fromRow, column)?.chessman != null) {
             return true;
           };
         };
       } else {
-        for (let column = fromColumn; column > toColumn; column--) {
+        for (let column = fromColumn - 1; column > toColumn; column--) {
           if (this.getFieldByPosition(fromRow, column)?.chessman != null) {
             return true;
           };
@@ -68,6 +69,55 @@ export class ChessBoard {
       };
     };
     return false;
+  };
+
+  public moveChessmanFromTo(fromRow: number, fromColumn: number, toRow: number, toColumn: number): Move {
+    const incorrectMove = new Move({
+      fromRow,
+      fromColumn,
+      toRow,
+      toColumn,
+      isSuccess: false,
+      isAttack: false,
+    });
+
+    if (this.isObstacleOnMovementPath(fromRow, fromColumn, toRow, toColumn)) {
+      return incorrectMove;
+    };
+
+    const movingChessField = this.getFieldByPosition(fromRow, fromColumn);
+    const targetChessField = this.getFieldByPosition(toRow, toColumn);
+    if (movingChessField === null || targetChessField === null) {
+      return incorrectMove;
+    };
+
+    const movingChessman = movingChessField.chessman;
+    const targetChessman = targetChessField.chessman;
+
+    if (movingChessman === null) {
+      return incorrectMove;
+    };
+
+    if (targetChessman?.color === movingChessman.color) {
+      return incorrectMove;
+    }
+
+    if (!movingChessman.isCanMove(toRow, toColumn, targetChessman !== null)) {
+      return incorrectMove;
+    }
+
+    targetChessField.chessman = movingChessman;
+    movingChessman.row = toRow;
+    movingChessman.column = toColumn;
+
+    return new Move({
+      fromRow,
+      fromColumn,
+      toRow,
+      toColumn,
+      isSuccess: true,
+      isAttack: targetChessman !== null,
+    })
   }
 
   public constructor() {

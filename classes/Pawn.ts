@@ -1,7 +1,6 @@
 import { ChessmanColor } from "../enums/ChessmanColor";
 import { ChessmanType } from "../enums/ChessmanType";
 import { IChessman } from "../interfaces/Chessman";
-import { Move } from "../interfaces/Move";
 import { isAllowedPosition } from "../utils/isAllowedPosition";
 import { StrictOmit } from "../utils/StrictOmit";
 
