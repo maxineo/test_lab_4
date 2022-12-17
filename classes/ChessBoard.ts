@@ -86,5 +86,6 @@ export class ChessBoard {
     this.getFieldByPosition = this.getFieldByPosition.bind(this);
     this.isDiagonalMove = this.isDiagonalMove.bind(this);
     this.isStraightMove = this.isStraightMove.bind(this);
+    this.isObstacleOnMovementPath = this.isObstacleOnMovementPath.bind(this);
   }
 }
